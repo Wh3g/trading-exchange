@@ -1,8 +1,10 @@
 package com.wh.entities;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
+@Entity
 public class User {
 
 	@Id
@@ -11,6 +13,11 @@ public class User {
 	private String username;
 	private String password;
 	
+	public User() {
+		super();
+		// Default Constructor
+	}
+
 	public User(String email, String username, String password) {
 		super();
 		this.email = email;
