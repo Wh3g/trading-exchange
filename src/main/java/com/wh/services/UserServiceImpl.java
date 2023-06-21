@@ -29,4 +29,9 @@ public class UserServiceImpl implements UserService {
 		repository.updateUsername(username, email);
 	}
 
+	@Override
+	public void updatePassword(String newPassword, String email, String oldPassword) {
+		repository.updatePassword(newPassword, email, oldPassword);
+	}
+
 }

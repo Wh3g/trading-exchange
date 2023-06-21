@@ -43,9 +43,20 @@ public class UserServiceImplTest {
 	}
 	
 	@Test
-	public void testUpdate() {
+	public void testUpdateUsername() {
+		
 		service.updateUsername(user.getUsername(), user.getEmail());
 		
 		verify(repository, times(1)).updateUsername(user.getUsername(), user.getEmail());
+	}
+	
+	@Test
+	public void testUpdatePassword() {
+		
+		String newPassword = "newPassword";
+		
+		service.updatePassword(newPassword, user.getEmail(), user.getPassword());
+		
+		verify(repository, times(1)).updatePassword(newPassword, user.getEmail(), user.getPassword());
 	}
 }
