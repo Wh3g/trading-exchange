@@ -32,11 +32,14 @@ public class UserRestController {
 		return service.getUser(email, password);
 	}
 
-	@PutMapping("/users/username/{username}")
-	public ResponseEntity<User> updateUsername(@PathVariable("username") String username, @RequestBody User user) {
-		service.updateUsername(username, user.getEmail());
-		user.setUsername(username);
-		return new ResponseEntity<User>(user, HttpStatus.OK);
+	@PutMapping("/users/username/{username}/{email}")
+	public ResponseEntity<String> updateUsername(@PathVariable("username") String username, @PathVariable("email") String email) {
+		service.updateUsername(username, email);
+		return new ResponseEntity<String>("Success", HttpStatus.OK);
+	}
+
+	public void updatePassword(String newPassword, String email, String oldPassword) {
+		service.updatePassword(newPassword, email, oldPassword);
 	}
 
 }
