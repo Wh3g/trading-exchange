@@ -87,4 +87,15 @@ public class UserRestControllerTest {
 		verify(service, times(1)).updatePassword(newPassword, user.getEmail(), user.getPassword());
 		
 	}
+	
+	@Test
+	public void testUpdatePasswordContent() {
+		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+		
+		String newPassword = "newPassword";
+		
+		ResponseEntity<String> actualResult = controller.updatePassword(newPassword, user.getEmail(), user.getPassword());
+		
+		assertEquals(HttpStatus.OK, actualResult.getStatusCode());
+	}
 }

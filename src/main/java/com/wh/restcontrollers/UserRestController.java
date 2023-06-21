@@ -38,8 +38,13 @@ public class UserRestController {
 		return new ResponseEntity<String>("Success", HttpStatus.OK);
 	}
 
-	public void updatePassword(String newPassword, String email, String oldPassword) {
+	@PutMapping("/users/password/{newPassword}/{email}/{oldPassword}")
+	public ResponseEntity<String> updatePassword(
+			@PathVariable("newPassword") String newPassword, 
+			@PathVariable("email") String email, 
+			@PathVariable("oldPassword") String oldPassword) {
 		service.updatePassword(newPassword, email, oldPassword);
+		return new ResponseEntity<String>("Success", HttpStatus.OK);
 	}
 
 }
