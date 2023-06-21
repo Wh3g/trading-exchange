@@ -31,4 +31,8 @@ public class UserRestController {
 		return service.getUser(email, password);
 	}
 
+	public void updateUsername(String username, String email) {
+		service.updateUsername(username, email);
+	}
+
 }

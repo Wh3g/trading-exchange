@@ -57,4 +57,11 @@ public class UserRestControllerTest {
 		
 		verify(service, times(1)).getUser(user.getEmail(), user.getPassword());
 	}
+	
+	@Test
+	public void testUpdateUsername() {
+		controller.updateUsername(user.getUsername(), user.getEmail());
+		
+		verify(service, times(1)).updateUsername(user.getUsername(), user.getEmail());
+	}
 }
