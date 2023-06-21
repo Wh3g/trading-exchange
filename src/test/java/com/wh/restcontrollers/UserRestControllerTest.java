@@ -33,6 +33,8 @@ public class UserRestControllerTest {
 			"johnsmith", 
 			"password");
 	
+	private MockHttpServletRequest request = new MockHttpServletRequest();
+	
 	@Test
 	public void testCreateUser() {
 		controller.createUser(user);
@@ -41,7 +43,6 @@ public class UserRestControllerTest {
 	
 	@Test
 	public void testCreateUserCode() {
-		MockHttpServletRequest request = new MockHttpServletRequest();
 		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 		
 		when(service.createUser(user)).thenReturn(user);
@@ -60,8 +61,21 @@ public class UserRestControllerTest {
 	
 	@Test
 	public void testUpdateUsername() {
-		controller.updateUsername(user.getUsername(), user.getEmail());
+		controller.updateUsername(user.getUsername(), user);
 		
 		verify(service, times(1)).updateUsername(user.getUsername(), user.getEmail());
 	}
+	
+	@Test
+	public void testUpdateUsernameContent() {
+		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+		
+		String newUsername = "newUsername";
+		
+		ResponseEntity<User> actualResult = controller.updateUsername(newUsername, user);
+		
+		assertEquals(newUsername, actualResult.getBody().getUsername());
+		assertEquals(HttpStatus.OK, actualResult.getStatusCode());
+	}
+	
 }

@@ -31,8 +31,10 @@ public class UserRestController {
 		return service.getUser(email, password);
 	}
 
-	public void updateUsername(String username, String email) {
-		service.updateUsername(username, email);
+	public ResponseEntity<User> updateUsername(String username, User user) {
+		service.updateUsername(username, user.getEmail());
+		user.setUsername(username);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
 }
