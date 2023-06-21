@@ -9,4 +9,8 @@ public interface UserService {
 	public User createUser(User user);
 	
 	public Optional<User> getUser(String email, String password);
+	
+	public void updateUsername(String username, String email);
+	
+	public void updatePassword(String newPassword, String email, String oldPassword);
 }

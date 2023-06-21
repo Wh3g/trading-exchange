@@ -32,4 +32,5 @@ public class UserRepositoryTest {
 		
 		assertNotNull(actualResult);
 	}
+
 }
