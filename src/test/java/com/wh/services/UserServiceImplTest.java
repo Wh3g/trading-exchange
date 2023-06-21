@@ -21,15 +21,23 @@ public class UserServiceImplTest {
 	@Mock
 	UserRepository repository;
 	
+	private User user = new User(
+			"test@email.com", 
+			"johnsmith", 
+			"password");
+	
 	@Test
 	public void testCreateUser() {
-		User user = new User(
-				"test@email.com", 
-				"johnsmith", 
-				"password");
 		
 		service.createUser(user);
 		
 		verify(repository, times(1)).save(user);
+	}
+	
+	@Test
+	public void testGetUser() {
+		service.getUser(user.getEmail(), user.getPassword());
+		
+		verify(repository, times(1)).getUser(user.getEmail(), user.getPassword());
 	}
 }
