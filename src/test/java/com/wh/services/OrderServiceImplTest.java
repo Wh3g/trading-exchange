@@ -109,24 +109,34 @@ public class OrderServiceImplTest {
     
     @Test
     void updateOrder_ExistingOrder_ReturnsUpdatedOrder() {
-        // Create a sample order
+        // Create a sample existing order
         Order existingOrder = new Order();
         existingOrder.setId(1L);
         existingOrder.setPrice(10.0);
 
+        // Stub the findById method to return the existing order
+        when(orderRepository.findById(existingOrder.getId())).thenReturn(Optional.of(existingOrder));
+
+        // Create a sample updated order with new values
+        Order updatedOrder = new Order();
+        updatedOrder.setId(existingOrder.getId());
+        updatedOrder.setPrice(15.0); // New price value
+
         // Stub the save method to return the updated order
-        when(orderRepository.save(existingOrder)).thenReturn(existingOrder);
+        when(orderRepository.save(existingOrder)).thenReturn(updatedOrder);
 
         // Update the order
-        Order updatedOrder = orderService.updateOrder(existingOrder);
+        Order result = orderService.updateOrder(updatedOrder);
+
+        // Verify that the findById method was invoked once with the existing order ID
+        verify(orderRepository, times(1)).findById(existingOrder.getId());
 
         // Verify that the save method was invoked once with the existing order
         verify(orderRepository, times(1)).save(existingOrder);
 
         // Additional assertions
-        assertEquals(existingOrder.getPrice(), updatedOrder.getPrice());
+        assertEquals(updatedOrder.getPrice(), result.getPrice());
     }
-
 
     
 
