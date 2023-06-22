@@ -34,4 +34,9 @@ public class UserServiceImpl implements UserService {
 		repository.updatePassword(newPassword, email, oldPassword);
 	}
 
+	@Override
+	public void deleteUser(User user) {
+		repository.delete(user);
+	}
+
 }

@@ -13,4 +13,6 @@ public interface UserService {
 	public void updateUsername(String username, String email);
 	
 	public void updatePassword(String newPassword, String email, String oldPassword);
+	
+	public void deleteUser(User user);
 }

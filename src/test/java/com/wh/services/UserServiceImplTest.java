@@ -59,4 +59,12 @@ public class UserServiceImplTest {
 		
 		verify(repository, times(1)).updatePassword(newPassword, user.getEmail(), user.getPassword());
 	}
+	
+	@Test
+	public void testDeleteUser() {
+		
+		service.deleteUser(user);
+		
+		verify(repository, times(1)).delete(user);
+	}
 }
