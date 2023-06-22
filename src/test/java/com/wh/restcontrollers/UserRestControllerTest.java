@@ -98,4 +98,20 @@ public class UserRestControllerTest {
 		
 		assertEquals(HttpStatus.OK, actualResult.getStatusCode());
 	}
+	
+	@Test
+	public void testDeleteUser() {
+		controller.deleteUser(user);
+		
+		verify(service, times(1)).deleteUser(user);
+	}
+	
+	@Test
+	public void testDeleteUserResponse() {
+		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+		
+		ResponseEntity<String> actualResult = controller.deleteUser(user);
+		
+		assertEquals(HttpStatus.OK, actualResult.getStatusCode());
+	}
 }
