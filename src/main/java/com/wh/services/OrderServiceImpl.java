@@ -39,18 +39,10 @@ public class OrderServiceImpl implements OrderService{
 
 	@Override 
 	public Order updateOrder(Order updatedOrder) {
-	    Optional<Order> existingOrder = orderRepository.findById(updatedOrder.getId());
-	    if (existingOrder.isPresent()) {
-	        Order savedOrder = existingOrder.get();
-	        // Update the properties of the existing order with the new values
-	        savedOrder.setPrice(updatedOrder.getPrice());
-	        // Update other properties as needed
-	        
-	        return orderRepository.save(savedOrder);
-	    } else {
-	        throw new IllegalArgumentException("Order not found");
-	    }
+		
+		return orderRepository.save(updatedOrder);
 	}
+
 
 	@Override
 	public void deleteOrder(Long orderId) {
