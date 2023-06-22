@@ -31,7 +31,7 @@ public class OrderRestController {
 		this.orderService = orderService;
 	}
 	
-	@PostMapping
+	@PostMapping("/orders/{orderId}")
 	public ResponseEntity<Order> createOrder(@RequestBody Order order){
 		
 		Order createdOrder = orderService.createOrder(order);
@@ -39,14 +39,14 @@ public class OrderRestController {
 		
 	}
 	
-	@GetMapping("/{orderId}")
+	@GetMapping("/orders/{orderId}")
     public ResponseEntity<Order> getOrderById(@PathVariable Long orderId) {
         Optional<Order> order = orderService.getOrderById(orderId);
         return order.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 	
-	@GetMapping
+	@GetMapping("/orders/{orderId}")
     public ResponseEntity<List<Order>> getAllOrders() {
         List<Order> orders = orderService.getAllOrders();
         return new ResponseEntity<>(orders, HttpStatus.OK);
@@ -63,8 +63,8 @@ public class OrderRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-	
-	@DeleteMapping("/{orderId}")
+	 
+	@DeleteMapping("/orders/{orderId}")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
         Optional<Order> existingOrder = orderService.getOrderById(orderId);
         if (existingOrder.isPresent()) {
