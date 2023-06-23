@@ -14,6 +14,8 @@ import jakarta.transaction.Transactional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
+	
+	
 
 	@Query("SELECT u FROM User u WHERE email = :email AND password = :password")
 	public Optional<User> getUser(@Param("email") String email, @Param("password") String password);
