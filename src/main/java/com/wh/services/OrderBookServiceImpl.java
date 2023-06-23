@@ -1,6 +1,7 @@
 package com.wh.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,12 @@ public class OrderBookServiceImpl implements OrderBookService {
 	public List<OrderBook> getAllOrderBooks() {
 		// TODO Auto-generated method stub
 		return repository.findAll();
+	}
+
+	@Override
+	public Optional<OrderBook> getOrderBook(String code) {
+		// TODO Auto-generated method stub
+		return repository.findById(code);
 	}
 
 }

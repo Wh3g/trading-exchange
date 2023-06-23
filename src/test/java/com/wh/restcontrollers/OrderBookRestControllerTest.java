@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -57,5 +59,21 @@ public class OrderBookRestControllerTest {
 		ResponseEntity<List<OrderBook>> actualResult = controller.getAllOrderBooks();
 		
 		assertEquals(HttpStatus.OK, actualResult.getStatusCode());
+	}
+	
+	@Test
+	public void testGetOrderBook() {
+		controller.getOrderBook(orderBook.getCode());
+		
+		verify(service, times(1)).getOrderBook(orderBook.getCode());
+	}
+	
+	@Test
+	public void testGetOrderBookResponse() {
+		when(service.getOrderBook(orderBook.getCode())).thenReturn(Optional.of(orderBook));
+		
+		Optional<OrderBook> actualResult = controller.getOrderBook(orderBook.getCode());
+		
+		assertEquals(orderBook, actualResult.get());
 	}
 }

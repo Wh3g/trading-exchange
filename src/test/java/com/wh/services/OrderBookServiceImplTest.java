@@ -21,10 +21,11 @@ public class OrderBookServiceImplTest {
 	
 	@Mock
 	private OrderBookRepository repository;
+
+	private OrderBook orderBook = mock(OrderBook.class);
 	
 	@Test
 	public void testCreateOrderBook() {
-		OrderBook orderBook = mock(OrderBook.class);
 		service.createOrderBook(orderBook);
 		
 		verify(repository, times(1)).save(orderBook);
@@ -36,4 +37,12 @@ public class OrderBookServiceImplTest {
 		
 		verify(repository, times(1)).findAll();
 	}
+	
+	@Test
+	public void testGetOrderBook() {
+		service.getOrderBook(orderBook.getCode());
+		
+		verify(repository, times(1)).findById(orderBook.getCode());
+	}
+	
 }
