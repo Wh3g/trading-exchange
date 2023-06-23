@@ -5,6 +5,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -41,5 +43,19 @@ public class OrderBookRestControllerTest {
 		ResponseEntity<OrderBook> actualResult = controller.createOrderBook(orderBook);
 		
 		assertEquals(HttpStatus.CREATED, actualResult.getStatusCode());
+	}
+	
+	@Test
+	public void testGetAllOrderBooks() {
+		controller.getAllOrderBooks();
+		
+		verify(service, times(1)).getAllOrderBooks();
+	}
+	
+	@Test
+	public void testGetAllOrderBooksResponse() {
+		ResponseEntity<List<OrderBook>> actualResult = controller.getAllOrderBooks();
+		
+		assertEquals(HttpStatus.OK, actualResult.getStatusCode());
 	}
 }

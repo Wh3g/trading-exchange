@@ -1,5 +1,7 @@
 package com.wh.restcontrollers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,11 @@ public class OrderBookRestController {
 	public ResponseEntity<OrderBook> createOrderBook(@RequestBody OrderBook orderBook) {
 		OrderBook storedOrderBook = service.createOrderBook(orderBook);
 		return new ResponseEntity<OrderBook>(storedOrderBook, HttpStatus.CREATED);
+	}
+
+	public ResponseEntity<List<OrderBook>> getAllOrderBooks() {
+		List<OrderBook> list = service.getAllOrderBooks();
+		return new ResponseEntity<List<OrderBook>>(list, HttpStatus.OK);
 	}
 
 }

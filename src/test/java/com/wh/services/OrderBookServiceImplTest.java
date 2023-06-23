@@ -29,4 +29,11 @@ public class OrderBookServiceImplTest {
 		
 		verify(repository, times(1)).save(orderBook);
 	}
+	
+	@Test
+	public void testGetAllOrderBooks() {
+		service.getAllOrderBooks();
+		
+		verify(repository, times(1)).findAll();
+	}
 }
