@@ -114,12 +114,9 @@ public class OrderServiceImplTest {
         // Arrange
         long orderId = 1L;
         double updatedPrice = 19.99;
-        Order updatedOrder = new Order();
-        updatedOrder.setId(orderId);
-        updatedOrder.setPrice(updatedPrice);
 
         // Act
-        orderService.updateOrder(updatedOrder);
+        orderService.updateOrder(orderId, updatedPrice);
 
         // Assert
         verify(orderRepository, times(1)).updateOrderPrice(orderId, updatedPrice);

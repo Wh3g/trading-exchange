@@ -38,9 +38,9 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public void updateOrder(Order updatedOrder) {
+	public void updateOrder(long orderId, double price) {
 		
-		orderRepository.updateOrderPrice(updatedOrder.getId(), updatedOrder.getPrice());
+		orderRepository.updateOrderPrice(orderId, price);
 	}
 
 
