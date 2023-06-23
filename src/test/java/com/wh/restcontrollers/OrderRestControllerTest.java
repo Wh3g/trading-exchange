@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -98,34 +99,49 @@ public class OrderRestControllerTest {
     }
     
     @Test
-    void updateOrder_ExistingOrder_ReturnsUpdatedOrder() {
+    public void testUpdateOrder_ExistingOrder_ReturnsUpdatedOrder() {
+        // Arrange
         Long orderId = 1L;
-        Order existingOrder = new Order();
         Order updatedOrder = new Order();
+        updatedOrder.setId(orderId);
+
+        Order existingOrder = new Order();
+        existingOrder.setId(orderId);
+
         when(orderService.getOrderById(orderId)).thenReturn(Optional.of(existingOrder));
-        when(orderService.updateOrder(existingOrder)).thenReturn(updatedOrder);
+        doNothing().when(orderService).updateOrder(updatedOrder);
 
-        ResponseEntity<Order> response = orderRestController.updateOrder(orderId, existingOrder);
+        // Act
+        ResponseEntity<Order> response = orderRestController.updateOrder(orderId, updatedOrder);
 
+        // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(updatedOrder, response.getBody());
+
         verify(orderService, times(1)).getOrderById(orderId);
-        verify(orderService, times(1)).updateOrder(existingOrder);
+        verify(orderService, times(1)).updateOrder(updatedOrder);
     }
     
     @Test
-    void updateOrder_NonExistingOrder_ReturnsNotFound() {
+    public void testUpdateOrder_NonExistingOrder_ReturnsNotFound() {
+        // Arrange
         Long orderId = 1L;
         Order updatedOrder = new Order();
+        updatedOrder.setId(orderId);
+
         when(orderService.getOrderById(orderId)).thenReturn(Optional.empty());
 
+        // Act
         ResponseEntity<Order> response = orderRestController.updateOrder(orderId, updatedOrder);
 
+        // Assert
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertEquals(null, response.getBody());
+
         verify(orderService, times(1)).getOrderById(orderId);
         verify(orderService, never()).updateOrder(updatedOrder);
     }
+
     
     @Test
     void deleteOrder_ExistingOrder_ReturnsNoContent() {

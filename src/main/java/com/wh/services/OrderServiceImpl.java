@@ -37,10 +37,10 @@ public class OrderServiceImpl implements OrderService{
 		return orderRepository.findAll();
 	}
 
-	@Override 
-	public Order updateOrder(Order updatedOrder) {
+	@Override
+	public void updateOrder(Order updatedOrder) {
 		
-		return orderRepository.save(updatedOrder);
+		orderRepository.updateOrderPrice(updatedOrder.getId(), updatedOrder.getPrice());
 	}
 
 

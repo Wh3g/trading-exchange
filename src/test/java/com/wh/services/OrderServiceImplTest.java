@@ -8,6 +8,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -108,24 +110,24 @@ public class OrderServiceImplTest {
     }
     
     @Test
-    void updateOrder_ExistingOrder_ReturnsUpdatedOrder() {
-        // Create a sample order
-        Order existingOrder = new Order();
-        existingOrder.setId(1L);
-        existingOrder.setPrice(10.0);
+    public void testUpdateOrder_CallsRepositoryUpdateOrderPrice() {
+        // Arrange
+        long orderId = 1L;
+        double updatedPrice = 19.99;
+        Order updatedOrder = new Order();
+        updatedOrder.setId(orderId);
+        updatedOrder.setPrice(updatedPrice);
 
-        // Stub the save method to return the updated order
-        when(orderRepository.save(existingOrder)).thenReturn(existingOrder);
+        // Act
+        orderService.updateOrder(updatedOrder);
 
-        // Update the order
-        Order updatedOrder = orderService.updateOrder(existingOrder);
-
-        // Verify that the save method was invoked once with the existing order
-        verify(orderRepository, times(1)).save(existingOrder);
-
-        // Additional assertions
-        assertEquals(existingOrder.getPrice(), updatedOrder.getPrice());
+        // Assert
+        verify(orderRepository, times(1)).updateOrderPrice(orderId, updatedPrice);
     }
+
+
+
+
 
 
     

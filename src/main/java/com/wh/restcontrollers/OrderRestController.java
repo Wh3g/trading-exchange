@@ -57,8 +57,8 @@ public class OrderRestController {
         Optional<Order> existingOrder = orderService.getOrderById(orderId);
         if (existingOrder.isPresent()) {
             updatedOrder.setId(orderId);
-            Order updated = orderService.updateOrder(updatedOrder);
-            return new ResponseEntity<>(updated, HttpStatus.OK);
+            orderService.updateOrder(updatedOrder);
+            return new ResponseEntity<>(updatedOrder, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
