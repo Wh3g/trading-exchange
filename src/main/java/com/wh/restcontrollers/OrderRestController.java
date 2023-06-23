@@ -31,7 +31,7 @@ public class OrderRestController {
 		this.orderService = orderService;
 	}
 	
-	@PostMapping("/orders/{orderId}")
+	@PostMapping("/orders")
 	public ResponseEntity<Order> createOrder(@RequestBody Order order){
 		
 		Order createdOrder = orderService.createOrder(order);
@@ -40,32 +40,32 @@ public class OrderRestController {
 	}
 	
 	@GetMapping("/orders/{orderId}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long orderId) {
+    public ResponseEntity<Order> getOrderById(@PathVariable("orderId") Long orderId) {
         Optional<Order> order = orderService.getOrderById(orderId);
         return order.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 	
-	@GetMapping("/orders/{orderId}")
+	@GetMapping("/orders")
     public ResponseEntity<List<Order>> getAllOrders() {
         List<Order> orders = orderService.getAllOrders();
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 	
-	@PutMapping("/{orderId}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long orderId, @RequestBody Order updatedOrder) {
+	@PutMapping("/orders/{orderId}/{price}")
+    public ResponseEntity<Order> updateOrder(@PathVariable("orderId") Long orderId, @PathVariable("price") double price) {
         Optional<Order> existingOrder = orderService.getOrderById(orderId);
         if (existingOrder.isPresent()) {
-            updatedOrder.setId(orderId);
-            orderService.updateOrder(updatedOrder);
-            return new ResponseEntity<>(updatedOrder, HttpStatus.OK);
+            orderService.updateOrder(orderId, price);
+            existingOrder.get().setPrice(price);
+            return new ResponseEntity<Order>(existingOrder.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 	 
 	@DeleteMapping("/orders/{orderId}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable("orderId") Long orderId) {
         Optional<Order> existingOrder = orderService.getOrderById(orderId);
         if (existingOrder.isPresent()) {
             orderService.deleteOrder(orderId);
