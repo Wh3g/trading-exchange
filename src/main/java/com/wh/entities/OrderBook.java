@@ -4,6 +4,8 @@ import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -15,6 +17,10 @@ public class OrderBook {
 	
 	@OneToMany(mappedBy = "code")
 	private List<Order> orders;
+	
+	@ManyToOne
+	@JoinColumn(name = "exchangeCode")
+	private Exchange exchangeCode;
 
 	public OrderBook() {
 		super();
