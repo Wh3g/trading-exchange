@@ -27,11 +27,10 @@ public class OrderBook {
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrderBook(String code, String name, List<Order> orders) {
+	public OrderBook(String code, String name) {
 		super();
 		this.code = code;
 		this.name = name;
-		this.orders = orders;
 	}
 
 	public String getCode() {
@@ -56,6 +55,14 @@ public class OrderBook {
 
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
+	}
+
+	public Exchange getExchangeCode() {
+		return exchangeCode;
+	}
+
+	public void setExchangeCode(Exchange exchangeCode) {
+		this.exchangeCode = exchangeCode;
 	}
 	
 }

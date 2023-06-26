@@ -17,7 +17,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.wh.entities.Exchange;
 import com.wh.entities.OrderBook;
+import com.wh.services.ExchangeService;
 import com.wh.services.OrderBookService;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,20 +31,30 @@ public class OrderBookRestControllerTest {
 	@Mock
 	private OrderBookService service;
 	
+	@Mock
+	private ExchangeService exchangeService;
+	
 	private OrderBook orderBook = mock(OrderBook.class);
+	
+	private Exchange exchange = mock(Exchange.class);
+
 	
 	@Test
 	public void testCreateOrderBook() {
+	
+		when(exchangeService.getExchange(exchange.getCode())).thenReturn(Optional.of(exchange));
 		
-		controller.createOrderBook(orderBook);
+		controller.createOrderBook(exchange.getCode(),orderBook);
 		
-		verify(service, times(1)).createOrderBook(orderBook);
+		verify(service, times(1)).createOrderBook(exchange.getCode(), orderBook);
 	}
 	
 	@Test
 	public void testCreateOrderBookContent() {
 		
-		ResponseEntity<OrderBook> actualResult = controller.createOrderBook(orderBook);
+		when(exchangeService.getExchange(exchange.getCode())).thenReturn(Optional.of(exchange));
+		
+		ResponseEntity<OrderBook> actualResult = controller.createOrderBook(exchange.getCode(), orderBook);
 		
 		assertEquals(HttpStatus.CREATED, actualResult.getStatusCode());
 	}

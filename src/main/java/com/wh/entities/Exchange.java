@@ -2,6 +2,8 @@ package com.wh.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -15,6 +17,7 @@ public class Exchange {
 	private double feeLadder;
 	
 	@OneToMany(mappedBy = "exchangeCode")
+	@JsonIgnore
 	private List<OrderBook> orderBooks;
 	
 	private double currentDaysTotalTradeValue;

@@ -15,9 +15,12 @@ public class OrderBookServiceImpl implements OrderBookService {
 	@Autowired
 	private OrderBookRepository repository;
 	
+	@Autowired
+	private ExchangeService exchangeService;
+	
 	@Override
-	public OrderBook createOrderBook(OrderBook orderBook) {
-		// TODO Auto-generated method stub
+	public OrderBook createOrderBook(String exchangeCode, OrderBook orderBook) {
+		orderBook.setExchangeCode(exchangeService.getExchange(exchangeCode).get());
 		return repository.save(orderBook);
 	}
 
@@ -29,7 +32,7 @@ public class OrderBookServiceImpl implements OrderBookService {
 
 	@Override
 	public Optional<OrderBook> getOrderBook(String code) {
-		// TODO Auto-generated method stub
+		System.out.println("Hello");
 		return repository.findById(code);
 	}
 

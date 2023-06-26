@@ -13,7 +13,7 @@ import com.wh.repositories.ExchangeRepository;
 public class ExchangeServiceImpl implements ExchangeService {
 
 	@Autowired
-	ExchangeRepository repository;
+	private ExchangeRepository repository;
 	
 	@Override
 	public Exchange createExchange(Exchange exchange) {
@@ -22,13 +22,11 @@ public class ExchangeServiceImpl implements ExchangeService {
 
 	@Override
 	public List<Exchange> getAllExchanges() {
-		// TODO Auto-generated method stub
 		return repository.findAll();
 	}
 
 	@Override
 	public Optional<Exchange> getExchange(String code) {
-	
 		return repository.findById(code);
 	}
 
