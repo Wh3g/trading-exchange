@@ -30,11 +30,10 @@ public class OrderBookServiceImplTest {
 	private ExchangeService exchangeService;
 
 	private OrderBook orderBook = mock(OrderBook.class);
+	private Exchange exchange = mock(Exchange.class);
 	
 	@Test
 	public void testCreateOrderBook() {
-		
-		Exchange exchange = mock(Exchange.class);
 		
 		when(exchangeService.getExchange(exchange.getCode())).thenReturn(Optional.of(exchange));
 		
@@ -55,6 +54,15 @@ public class OrderBookServiceImplTest {
 		service.getOrderBook(orderBook.getCode());
 		
 		verify(repository, times(1)).findById(orderBook.getCode());
+	}
+	
+	@Test
+	public void testGetOrderBooksByExchange() {
+		when(exchangeService.getExchange(exchange.getCode())).thenReturn(Optional.of(exchange));
+		
+		service.getOrderBooksByExchange(exchange.getCode());
+		
+		verify(repository, times(1)).findByExchange(exchange);
 	}
 	
 }

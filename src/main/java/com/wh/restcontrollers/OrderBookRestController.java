@@ -40,4 +40,10 @@ public class OrderBookRestController {
 		return service.getOrderBook(code);
 	}
 
+	@GetMapping("/exchanges/{exchangeCode}/order-books")
+	public ResponseEntity<List<OrderBook>> getOrderBooksByExchange(@PathVariable("exchangeCode") String exchangeCode) {
+		List<OrderBook> list = service.getOrderBooksByExchange(exchangeCode);
+		return new ResponseEntity<List<OrderBook>>(list, HttpStatus.OK);
+	}
+
 }

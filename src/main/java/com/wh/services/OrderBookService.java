@@ -12,4 +12,6 @@ public interface OrderBookService {
 	public List<OrderBook> getAllOrderBooks();
 	
 	public Optional<OrderBook> getOrderBook(String code);
+	
+	public List<OrderBook> getOrderBooksByExchange(String exchangeCode);
 }

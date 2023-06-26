@@ -84,4 +84,19 @@ public class OrderBookRestControllerTest {
 		
 		assertEquals(orderBook, actualResult.get());
 	}
+	
+	@Test
+	public void testGetOrderBooksByExchange() {
+		controller.getOrderBooksByExchange(exchange.getCode());
+		
+		verify(service, times(1)).getOrderBooksByExchange(exchange.getCode());
+	}
+	
+	@Test
+	public void testGetOrderBooksExchangeResponse() {
+		
+		ResponseEntity<List<OrderBook>> actualResult = controller.getOrderBooksByExchange(exchange.getCode());
+		
+		assertEquals(HttpStatus.OK, actualResult.getStatusCode());
+	}
 }
