@@ -32,7 +32,6 @@ public class OrderBookServiceImpl implements OrderBookService {
 
 	@Override
 	public Optional<OrderBook> getOrderBook(String code) {
-		System.out.println("Hello");
 		return repository.findById(code);
 	}
 

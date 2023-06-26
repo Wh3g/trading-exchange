@@ -41,8 +41,6 @@ public class OrderBookRestControllerTest {
 	
 	@Test
 	public void testCreateOrderBook() {
-	
-		when(exchangeService.getExchange(exchange.getCode())).thenReturn(Optional.of(exchange));
 		
 		controller.createOrderBook(exchange.getCode(),orderBook);
 		
@@ -51,8 +49,6 @@ public class OrderBookRestControllerTest {
 	
 	@Test
 	public void testCreateOrderBookContent() {
-		
-		when(exchangeService.getExchange(exchange.getCode())).thenReturn(Optional.of(exchange));
 		
 		ResponseEntity<OrderBook> actualResult = controller.createOrderBook(exchange.getCode(), orderBook);
 		
