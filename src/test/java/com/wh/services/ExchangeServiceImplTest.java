@@ -22,12 +22,27 @@ public class ExchangeServiceImplTest {
 	@Mock
 	ExchangeRepository repository;
 	
+	private Exchange exchange = mock(Exchange.class);
+	
 	@Test
 	public void testCreateExchange() {
-		Exchange exchange = mock(Exchange.class);
 		
 		service.createExchange(exchange);
 		
 		verify(repository, times(1)).save(exchange);
+	}
+	
+	@Test
+	public void testGetAllExchanges() {
+		service.getAllExchanges();
+		
+		verify(repository, times(1)).findAll();
+	}
+	
+	@Test
+	public void testGetExchange() {
+		service.getExchange(exchange.getCode());
+		
+		verify(repository, times(1)).findById(exchange.getCode());
 	}
 }

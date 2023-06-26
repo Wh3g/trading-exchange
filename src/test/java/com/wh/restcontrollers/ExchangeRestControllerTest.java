@@ -6,6 +6,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -50,5 +53,38 @@ public class ExchangeRestControllerTest {
 		
 		assertEquals(exchange, actualResult.getBody());
 		assertEquals(HttpStatus.CREATED, actualResult.getStatusCode());
+	}
+	
+	@Test
+	public void testGetAllExchanges() {
+		controller.getAllExchanges();
+		
+		verify(service, times(1)).getAllExchanges();
+	}
+	
+	@Test
+	public void testGetAllExchangesResponse() {
+		ResponseEntity<List<Exchange>> actualResult = controller.getAllExchanges();
+		
+		assertEquals(HttpStatus.OK, actualResult.getStatusCode());
+	}
+	
+	@Test
+	public void testGetExchange() {
+		controller.getExchange(exchange.getCode());
+		
+		verify(service, times(1)).getExchange(exchange.getCode());
+	}
+	
+	@Test
+	public void testGetExchangeResponse() {
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+		
+		when(service.getExchange(exchange.getCode())).thenReturn(Optional.of(exchange));
+		
+		Optional<Exchange> actualResult = controller.getExchange(exchange.getCode());
+		
+		assertEquals(Optional.of(exchange), actualResult);
 	}
 }
