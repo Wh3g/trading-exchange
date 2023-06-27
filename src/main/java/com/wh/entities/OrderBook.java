@@ -4,6 +4,8 @@ import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -15,17 +17,20 @@ public class OrderBook {
 	
 	@OneToMany(mappedBy = "code")
 	private List<Order> orders;
+	
+	@ManyToOne
+	@JoinColumn(name = "exchangeCode")
+	private Exchange exchangeCode;
 
 	public OrderBook() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public OrderBook(String code, String name, List<Order> orders) {
+	public OrderBook(String code, String name) {
 		super();
 		this.code = code;
 		this.name = name;
-		this.orders = orders;
 	}
 
 	public String getCode() {
@@ -50,6 +55,14 @@ public class OrderBook {
 
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
+	}
+
+	public Exchange getExchangeCode() {
+		return exchangeCode;
+	}
+
+	public void setExchangeCode(Exchange exchangeCode) {
+		this.exchangeCode = exchangeCode;
 	}
 	
 }

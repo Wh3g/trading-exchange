@@ -7,9 +7,11 @@ import com.wh.entities.OrderBook;
 
 public interface OrderBookService {
 
-	public OrderBook createOrderBook(OrderBook orderBook);
+	public OrderBook createOrderBook(String exchangeCode, OrderBook orderBook);
 	
 	public List<OrderBook> getAllOrderBooks();
 	
 	public Optional<OrderBook> getOrderBook(String code);
+	
+	public List<OrderBook> getOrderBooksByExchange(String exchangeCode);
 }

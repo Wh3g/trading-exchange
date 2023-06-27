@@ -3,6 +3,9 @@ package com.wh.services;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.wh.entities.Exchange;
 import com.wh.entities.OrderBook;
 import com.wh.repositories.OrderBookRepository;
 
@@ -21,12 +25,19 @@ public class OrderBookServiceImplTest {
 	
 	@Mock
 	private OrderBookRepository repository;
+	
+	@Mock
+	private ExchangeService exchangeService;
 
 	private OrderBook orderBook = mock(OrderBook.class);
+	private Exchange exchange = mock(Exchange.class);
 	
 	@Test
 	public void testCreateOrderBook() {
-		service.createOrderBook(orderBook);
+		
+		when(exchangeService.getExchange(exchange.getCode())).thenReturn(Optional.of(exchange));
+		
+		service.createOrderBook(exchange.getCode(), orderBook);
 		
 		verify(repository, times(1)).save(orderBook);
 	}
@@ -43,6 +54,15 @@ public class OrderBookServiceImplTest {
 		service.getOrderBook(orderBook.getCode());
 		
 		verify(repository, times(1)).findById(orderBook.getCode());
+	}
+	
+	@Test
+	public void testGetOrderBooksByExchange() {
+		when(exchangeService.getExchange(exchange.getCode())).thenReturn(Optional.of(exchange));
+		
+		service.getOrderBooksByExchange(exchange.getCode());
+		
+		verify(repository, times(1)).findByExchange(exchange);
 	}
 	
 }

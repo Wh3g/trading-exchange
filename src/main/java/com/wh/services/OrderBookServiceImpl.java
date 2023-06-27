@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wh.entities.Exchange;
 import com.wh.entities.OrderBook;
 import com.wh.repositories.OrderBookRepository;
 
@@ -15,9 +16,12 @@ public class OrderBookServiceImpl implements OrderBookService {
 	@Autowired
 	private OrderBookRepository repository;
 	
+	@Autowired
+	private ExchangeService exchangeService;
+	
 	@Override
-	public OrderBook createOrderBook(OrderBook orderBook) {
-		// TODO Auto-generated method stub
+	public OrderBook createOrderBook(String exchangeCode, OrderBook orderBook) {
+		orderBook.setExchangeCode(exchangeService.getExchange(exchangeCode).get());
 		return repository.save(orderBook);
 	}
 
@@ -29,8 +33,13 @@ public class OrderBookServiceImpl implements OrderBookService {
 
 	@Override
 	public Optional<OrderBook> getOrderBook(String code) {
-		// TODO Auto-generated method stub
 		return repository.findById(code);
+	}
+
+	@Override
+	public List<OrderBook> getOrderBooksByExchange(String exchangeCode) {
+		Exchange exchange = exchangeService.getExchange(exchangeCode).get();
+		return repository.findByExchange(exchange);
 	}
 
 }
