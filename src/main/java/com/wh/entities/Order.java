@@ -3,25 +3,28 @@ package com.wh.entities;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "orders")
-
-public class Order {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
+public abstract class Order {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
-	private long Id;
-	
-	private boolean isBuy;
+	private long id;
 	private double price;
 	private LocalDateTime timestamp;
 	
@@ -39,24 +42,19 @@ public class Order {
 		
 	}
 	
-	//getter and setter methods for other attributes
-	
+	public Order(double price, User user, OrderBook code) {
+		super();
+		this.price = price;
+		this.user = user;
+		this.code = code;
+	}
+
 	public long getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(long id) {
-		Id = id;
-	}
-	
-	public boolean isBuy() {
-		
-		return isBuy;
-	}
-
-	public void setBuy(boolean buy) {
-		
-		isBuy = buy;
+		this.id = id;
 	}
 	
 	public double getPrice() {

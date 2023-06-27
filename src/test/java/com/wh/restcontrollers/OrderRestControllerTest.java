@@ -39,21 +39,20 @@ public class OrderRestControllerTest {
     
     @Test
     void createOrder_ReturnsCreatedOrder() {
-        Order order = new Order();
-        Order createdOrder = new Order();
-        when(orderService.createOrder(order)).thenReturn(createdOrder);
+        Order order = mock(Order.class);
+        when(orderService.createOrder(order)).thenReturn(order);
 
         ResponseEntity<Order> response = orderRestController.createOrder(order);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(createdOrder, response.getBody());
+        assertEquals(order, response.getBody());
         verify(orderService, times(1)).createOrder(order);
     }
     
     @Test
     void getOrderById_ExistingOrder_ReturnsOrder() {
         Long orderId = 1L;
-        Order order = new Order();
+        Order order = mock(Order.class);
         when(orderService.getOrderById(orderId)).thenReturn(Optional.of(order));
 
         ResponseEntity<Order> response = orderRestController.getOrderById(orderId);
@@ -78,8 +77,8 @@ public class OrderRestControllerTest {
     @Test
     void getAllOrders_ReturnsAllOrders() {
         List<Order> orders = new ArrayList<>();
-        orders.add(new Order());
-        orders.add(new Order());
+        orders.add(mock(Order.class));
+        orders.add(mock(Order.class));
         when(orderService.getAllOrders()).thenReturn(orders);
 
         ResponseEntity<List<Order>> response = orderRestController.getAllOrders();
@@ -130,7 +129,7 @@ public class OrderRestControllerTest {
     @Test
     void deleteOrder_ExistingOrder_ReturnsNoContent() {
     	Long orderId = 1L;
-    	Order existingOrder = new Order();
+    	Order existingOrder = mock(Order.class);
     	when(orderService.getOrderById(orderId)).thenReturn(Optional.of(existingOrder));
     	ResponseEntity<Void> response = orderRestController.deleteOrder(orderId);
 
