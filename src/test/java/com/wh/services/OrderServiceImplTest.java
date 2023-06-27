@@ -15,27 +15,25 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.wh.entities.Bid;
 import com.wh.entities.Order;
 import com.wh.repositories.OrderRepository;
 
 
-
+@ExtendWith(MockitoExtension.class)
 public class OrderServiceImplTest {
 	
-	private OrderService orderService;
+	@InjectMocks
+	private OrderServiceImpl orderService;
 
     @Mock
     private OrderRepository orderRepository;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        orderService = new OrderServiceImpl(orderRepository);
-    }
     
     @Test
     public void createOrder_ValidOrder_ReturnsCreatedOrder() {
