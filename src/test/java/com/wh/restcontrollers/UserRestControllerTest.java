@@ -1,11 +1,10 @@
 package com.wh.restcontrollers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,10 +29,7 @@ public class UserRestControllerTest {
 	@Mock
 	UserService service;
 	
-	private User user = new User(
-			"test@email.com", 
-			"johnsmith", 
-			"password");
+	private User user = mock(User.class);
 	
 	private MockHttpServletRequest request = new MockHttpServletRequest();
 	
@@ -114,4 +110,7 @@ public class UserRestControllerTest {
 		
 		assertEquals(HttpStatus.OK, actualResult.getStatusCode());
 	}
+	
+//	@Test
+//	public v
 }

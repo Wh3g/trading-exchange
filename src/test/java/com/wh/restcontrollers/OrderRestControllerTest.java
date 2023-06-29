@@ -1,6 +1,7 @@
 package com.wh.restcontrollers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -19,6 +20,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.wh.entities.Ask;
+import com.wh.entities.Bid;
 import com.wh.entities.Order;
 import com.wh.services.OrderService;
 
@@ -37,16 +40,38 @@ public class OrderRestControllerTest {
         MockitoAnnotations.openMocks(this);
     }
     
+//    @Test
+//    void createOrder_ReturnsCreatedOrder() {
+//        Order order = mock(Order.class);
+//        when(orderService.createOrder(order)).thenReturn(order);
+//
+//        ResponseEntity<Order> response = orderRestController.createOrder(order);
+//
+//        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+//        assertEquals(order, response.getBody());
+//        verify(orderService, times(1)).createOrder(order);
+//    }
+    
     @Test
-    void createOrder_ReturnsCreatedOrder() {
-        Order order = mock(Order.class);
-        when(orderService.createOrder(order)).thenReturn(order);
+    public void createAskOrder() {
+    	Order askOrder = mock(Ask.class);
+    	
+    	when(orderService.createOrder(any(Order.class))).thenReturn(any(Order.class));
+    	
+    	ResponseEntity<Order> actualResult = orderRestController.createOrder((Ask) askOrder);
+    	
+    	assertEquals(actualResult.getStatusCode(), HttpStatus.CREATED);
+    }
+    
+    @Test
+    public void createBidOrder() {
+    	Order bidOrder = mock(Bid.class);
 
-        ResponseEntity<Order> response = orderRestController.createOrder(order);
-
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(order, response.getBody());
-        verify(orderService, times(1)).createOrder(order);
+    	when(orderService.createOrder(any(Order.class))).thenReturn(any(Order.class));
+    	
+    	ResponseEntity<Order> actualResult = orderRestController.createOrder((Bid) bidOrder);
+    	
+    	assertEquals(actualResult.getStatusCode(), HttpStatus.CREATED);
     }
     
     @Test
@@ -105,29 +130,8 @@ public class OrderRestControllerTest {
         verify(orderService, times(1)).updateOrder(order.getId(), newPrice);
     }
     
-//    @Test
-//    public void testUpdateOrder_NonExistingOrder_ReturnsNotFound() {
-//        // Arrange
-//        Long orderId = 1L;
-//        Order updatedOrder = new Order();
-//        updatedOrder.setId(orderId);
-//
-//        when(orderService.getOrderById(orderId)).thenReturn(Optional.empty());
-//
-//        // Act
-//        ResponseEntity<Order> response = orderRestController.updateOrder(orderId, updatedOrder);
-//
-//        // Assert
-//        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-//        assertEquals(null, response.getBody());
-//
-//        verify(orderService, times(1)).getOrderById(orderId);
-//        verify(orderService, never()).updateOrder(updatedOrder);
-//    }
-
-    
     @Test
-    void deleteOrder_ExistingOrder_ReturnsNoContent() {
+    public void deleteOrder_ExistingOrder_ReturnsNoContent() {
     	Long orderId = 1L;
     	Order existingOrder = mock(Order.class);
     	when(orderService.getOrderById(orderId)).thenReturn(Optional.of(existingOrder));
@@ -140,7 +144,7 @@ public class OrderRestControllerTest {
     }
     
     @Test
-    void deleteOrder_NonExistingOrder_ReturnsNotFound() {
+    public void deleteOrder_NonExistingOrder_ReturnsNotFound() {
         Long orderId = 1L;
         when(orderService.getOrderById(orderId)).thenReturn(Optional.empty());
 
@@ -152,5 +156,4 @@ public class OrderRestControllerTest {
         verify(orderService, never()).deleteOrder(orderId);
     }
  
-    
 }

@@ -1,6 +1,7 @@
 package com.wh.repositories;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -15,10 +16,7 @@ import com.wh.entities.User;
 @ExtendWith(MockitoExtension.class)
 public class UserRepositoryTest {
 
-	private User user = new User(
-			"test@email.com", 
-			"johnsmith", 
-			"password");
+	private User user = mock(User.class);
 	
 	@Mock
 	UserRepository repository;

@@ -16,7 +16,10 @@ public class OrderBook {
 	private String name;
 	
 	@OneToMany(mappedBy = "code")
-	private List<Order> orders;
+	private List<Ask> asks;
+	
+	@OneToMany(mappedBy = "code")
+	private List<Bid> bids;
 	
 	@ManyToOne
 	@JoinColumn(name = "exchangeCode")
@@ -49,12 +52,20 @@ public class OrderBook {
 		this.name = name;
 	}
 
-	public List<Order> getOrders() {
-		return orders;
+	public List<Ask> getAsks() {
+		return asks;
 	}
 
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
+	public void setAsks(List<Ask> asks) {
+		this.asks = asks;
+	}
+
+	public List<Bid> getBids() {
+		return bids;
+	}
+
+	public void setBids(List<Bid> bids) {
+		this.bids = bids;
 	}
 
 	public Exchange getExchangeCode() {

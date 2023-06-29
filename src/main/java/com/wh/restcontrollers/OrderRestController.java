@@ -1,8 +1,9 @@
 
 package com.wh.restcontrollers;
 
-import com.wh.entities.Order;
-import com.wh.services.OrderService;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,28 +16,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Optional;
+import com.wh.entities.Ask;
+import com.wh.entities.Bid;
+import com.wh.entities.Order;
+import com.wh.services.OrderService;
 
 @RestController
-@RequestMapping("/api/order")
-
 public class OrderRestController {
 	
-	private final OrderService orderService;
-	
 	@Autowired
-	public OrderRestController(OrderService orderService) {
-		
-		this.orderService = orderService;
-	}
+	private OrderService orderService;
 	
-	@PostMapping("/orders")
-	public ResponseEntity<Order> createOrder(@RequestBody Order order){
+	@PostMapping("/orders/ask")
+	public ResponseEntity<Order> createOrder(@RequestBody Ask order) {
 		
 		Order createdOrder = orderService.createOrder(order);
 		return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
 		
+	}
+	
+	@PostMapping("/orders/bid")
+	public ResponseEntity<Order> createOrder(@RequestBody Bid order) {
+		Order createdOrder = orderService.createOrder(order);
+		return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/orders/{orderId}")

@@ -27,6 +27,7 @@ public abstract class Order {
 	private long id;
 	private double price;
 	private LocalDateTime timestamp;
+	private int quantity;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -86,6 +87,21 @@ public abstract class Order {
 		
 		this.user = user;
 	}
-	
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public OrderBook getCode() {
+		return code;
+	}
+
+	public void setCode(OrderBook code) {
+		this.code = code;
+	}
 	
 }

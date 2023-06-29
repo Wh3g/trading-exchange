@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.wh.entities.Exchange;
 import com.wh.entities.OrderBook;
+import com.wh.entities.Transaction;
 import com.wh.repositories.OrderBookRepository;
 
 @Service
@@ -18,6 +19,9 @@ public class OrderBookServiceImpl implements OrderBookService {
 	
 	@Autowired
 	private ExchangeService exchangeService;
+	
+	@Autowired
+	private TransactionService transactionService;
 	
 	@Override
 	public OrderBook createOrderBook(String exchangeCode, OrderBook orderBook) {
@@ -40,6 +44,12 @@ public class OrderBookServiceImpl implements OrderBookService {
 	public List<OrderBook> getOrderBooksByExchange(String exchangeCode) {
 		Exchange exchange = exchangeService.getExchange(exchangeCode).get();
 		return repository.findByExchange(exchange);
+	}
+
+	@Override
+	public Transaction createTransaction(Transaction transaction) {
+		// TODO Auto-generated method stub
+		return transactionService.createTransaction(transaction);
 	}
 
 }

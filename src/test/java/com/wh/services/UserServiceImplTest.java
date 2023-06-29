@@ -1,5 +1,6 @@
 package com.wh.services;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -21,10 +22,7 @@ public class UserServiceImplTest {
 	@Mock
 	UserRepository repository;
 	
-	private User user = new User(
-			"test@email.com", 
-			"johnsmith", 
-			"password");
+	private User user = mock(User.class);
 	
 	@Test
 	public void testCreateUser() {

@@ -13,8 +13,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.wh.entities.Ask;
+import com.wh.entities.Bid;
 import com.wh.entities.Exchange;
+import com.wh.entities.Order;
 import com.wh.entities.OrderBook;
+import com.wh.entities.Transaction;
 import com.wh.repositories.OrderBookRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,6 +32,9 @@ public class OrderBookServiceImplTest {
 	
 	@Mock
 	private ExchangeService exchangeService;
+	
+	@Mock
+	private TransactionService transactionService;
 
 	private OrderBook orderBook = mock(OrderBook.class);
 	private Exchange exchange = mock(Exchange.class);
@@ -63,6 +70,16 @@ public class OrderBookServiceImplTest {
 		service.getOrderBooksByExchange(exchange.getCode());
 		
 		verify(repository, times(1)).findByExchange(exchange);
+	}
+	
+	@Test
+	public void testCreateTransaction() {
+		
+		Transaction transaction = mock(Transaction.class);
+		
+		
+		service.createTransaction(transaction);
+		verify(transactionService, times(1)).createTransaction(transaction);
 	}
 	
 }
